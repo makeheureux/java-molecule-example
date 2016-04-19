@@ -1,15 +1,13 @@
 language: java
-
 jdk:
 - oraclejdk8
-
 env:
   global:
   - TERM=dumb
-
 before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-
-after_success:
-  - git push heroku master
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+deploy:
+  provider: heroku
+  api_key:
+    secure: sabNdfzzUCbv+OobcLaG+iW4nwr6ju1y1wGFvtoSyuIPMt+hfJiD0wdDKNoY+s/pYAS72YF9cFdo/x8+ndpzM9fitGi2TxqqrMviq3XLjyJ1Hg4veBKtzdK29mlTqpkFPepi8LUXk1xSZgq0iZU6LiArZkEwB6Wlp59SahhsiV1F/wtzZM9qpN9lIMniJgZrOMphPkJxawR/lAL79JYvFSKZcDS+VWcJtg0j241tdrjhnyPkSoEGn2eFFMIfkIXoGnps1MPqkhMQ4NYEagefn8IzRbDXjswDmyhGAA9o02jYUfKiyjVzNhB0fkws7fR2EuJcEZ3MFVdttNFNDIPnp6KIYE5b7zswG9zI0NEg14YXup87tkienhSG63iZ4UqQiQjmNR3MfAzRuDRmQTaG0n0LbAy/XvILnUpo8OCd0x2fJ0PH3+8iiFBzKAphpvP0uUaqA+wxD5Wv/4tHHnXi6jZUD3UUGx1yN1jJYjsGXPpKSUbD+ub37xzr440xFgnMpz5tNBKl9L19lA4CTRuk69Il1bGyUZuw0fCKAJZ6H+M2FlwqM7voawc86miGwjgG921myLOug63qh/ksP907zJ5Oy8V61EU+2tLGyqNjOd08Tx3LcdhdEs7F6iF+laUb2cPGFUMp44g1Vzdv7u0v2i6k6MzQJ88woQi5uxUaWe0=
