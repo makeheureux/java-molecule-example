@@ -14,6 +14,7 @@ def libs = [
         hamcrest_all      : 'org.hamcrest:hamcrest-all:1.3',
         junit             : 'junit:junit:4.11@jar',
         molecule_test     : 'com.vtence.molecule:molecule:0.7:tests',
+		nekohtml          : 'net.sourceforge.nekohtml:nekohtml:1.9.21',
         selenium_firefox  : 'org.seleniumhq.selenium:selenium-firefox-driver:2.53.0',
         windowlicker_core : 'com.googlecode.windowlicker:windowlicker-core:r268@jar',
         windowlicker_web  : 'com.googlecode.windowlicker:windowlicker-web:r268@jar',
@@ -27,6 +28,7 @@ dependencies {
     testCompile libs.hamcrest_all
     testCompile libs.junit
     testCompile libs.molecule_test
+    testCompile libs.nekohtml
     testCompile libs.selenium_firefox
     testCompile libs.windowlicker_core
     testCompile libs.windowlicker_web
