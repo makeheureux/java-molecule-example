@@ -22,7 +22,7 @@ public class Yose {
 			{
 				get("/").to((request, response) -> response.body( // "<html><body>Hello
 																	// Yose</body></html>"));
-						"<html><body>Hello Yose <a>foo</a><a id='repository-link' href='github.com/makeheureux/java-molecule-example'>source code</a></body></html>"));
+						"<html><body>Hello Yose <a id='repository-link' href='github.com/makeheureux/java-molecule-example'>source code</a></body></html>"));
 				get("/ping").to(new Ping(gson)::pong);
 			}
 		});
