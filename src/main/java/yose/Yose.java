@@ -21,6 +21,8 @@ public class Yose {
         server.start(new DynamicRoutes() {{
             get("/").to((request, response) -> response.body("Hello Yose"));
             get("/ping").to(new Ping(gson)::pong);
+            get("/primeFactors").to(new Prime(gson)::numbers);
+            
         }});
     }
 

@@ -41,4 +41,13 @@ public class StartWorld {
                             .hasContentType("application/json")
                             .hasBodyText("{\"alive\":true}");
     }
+    @Test 	
+    public void testPowerOfTwo() throws IOException {
+    	response = request.get("/primeFactors?number=16");
+    	
+    	assertThat(response).isOK()
+        .hasContentType("application/json")
+        .hasBodyText("{\"number\":16,\"decomposition\":[2,2,2,2]}");
+    }
+
 }

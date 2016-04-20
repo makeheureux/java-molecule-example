@@ -14,7 +14,8 @@ public class Ping {
     }
 
     public void pong(Request request, Response response) throws Exception {
-        response.contentType(JSON).body(gson.toJson(new Pong()));
+        request.attribute("number");
+    	response.contentType(JSON).body(gson.toJson(new Pong()));
     }
 
     public static class Pong {
