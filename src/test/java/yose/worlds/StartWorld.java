@@ -7,7 +7,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.net.URL;
 
 import org.junit.After;
 import org.junit.Before;
@@ -19,6 +18,7 @@ import com.vtence.molecule.testing.http.HttpRequest;
 import com.vtence.molecule.testing.http.HttpResponse;
 
 import yose.HTMLDocument;
+import yose.HTTPHelpers;
 import yose.YoseDriver;
 
 public class StartWorld {
@@ -46,34 +46,15 @@ public class StartWorld {
 	@Test
 	public void firstWebServiceChallenge() throws IOException {
 		response = request.get("/ping");
-
-		assertThat(response).isOK().hasContentType("application/json").hasBodyText("{\"alive\":true}");
+		HTTPHelpers.assertValidJSONResponse(response);
+		assertThat(response).hasBodyText("{\"alive\":true}");
 	}
 
 	@Test
 	public void testPowerOfTwo() throws IOException {
 		response = request.get("/primeFactors?number=16");
-
-		assertThat(response).isOK().hasContentType("application/json")
-				.hasBodyText("{\"number\":16,\"decomposition\":[2,2,2,2]}");
-	}
-
-	@Test
-	public void shareChallengeLink() throws Exception {
-		response = request.get("/");
-		assertThat(response).isOK();
-		Document doc = HTMLDocument.from(response);
-		Element link = doc.getElementById("repository-link");
-		assertNotNull(link);
-		assertEquals("A", link.getTagName());
-		String href = link.getAttribute("href");
-		assertNotEquals(href, "");
-		HttpResponse linkResponse = getFromURL(href);
-		assertValidHTMLResponse(linkResponse);
-		Document linkDoc = HTMLDocument.from(linkResponse);
-		Element readme = linkDoc.getElementById("readme");
-		assertNotNull(readme);
-		assertTrue(readme.getTextContent().contains("YoseTheGame"));
+		HTTPHelpers.assertValidJSONResponse(response);
+		assertThat(response).hasBodyText("{\"number\":16,\"decomposition\":[2,2,2,2]}");
 	}
 
 	@Test
@@ -94,8 +75,8 @@ public class StartWorld {
 		Document doc = HTMLDocument.from(response);
 		Element link = doc.getElementById("repository-link");
 		String href = link.getAttribute("href");
-		HttpResponse linkResponse = getFromURL(href);
-		assertValidHTMLResponse(linkResponse);
+		HttpResponse linkResponse = HTTPHelpers.getFromURL(href);
+		HTTPHelpers.assertValidHTMLResponse(linkResponse);
 	}
 
 	@Test
@@ -104,31 +85,10 @@ public class StartWorld {
 		Document doc = HTMLDocument.from(response);
 		Element link = doc.getElementById("repository-link");
 		String href = link.getAttribute("href");
-		HttpResponse linkResponse = getFromURL(href);
+		HttpResponse linkResponse = HTTPHelpers.getFromURL(href);
 		Document linkDoc = HTMLDocument.from(linkResponse);
 		Element readme = linkDoc.getElementById("readme");
 		assertNotNull(readme);
 		assertTrue(readme.getTextContent().contains("YoseTheGame"));
-	}
-
-	private static HttpResponse getFromURL(String url) throws IOException {
-		URL split = new URL(url);
-		String host = split.getHost();
-		int port = split.getPort();
-		if (port < 0) {
-			String protocol = split.getProtocol();
-			port = "https".equals(protocol) ? 443 : 80;
-		}
-		String file = split.getFile();
-		HttpRequest request = new HttpRequest(host, port);
-		request.secure(true);
-		request.followRedirects(true);
-		return request.get(file);
-	}
-
-	private static void assertValidHTMLResponse(HttpResponse response) {
-		assertThat(response).isOK();
-		String contentType = response.contentType();
-		assertTrue(contentType.matches("^text/html[;$].*"));
 	}
 }
