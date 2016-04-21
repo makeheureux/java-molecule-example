@@ -93,4 +93,11 @@ public class PrimeWorld {
 		HTTPHelpers.assertValidJSONResponse(response);
 		assertThat(response).hasBodyText("{\"number\":997,\"decomposition\":[997]}");
 	}
+
+	@Test
+	public void testBigNumber() throws Exception {
+		response = request.get("/primeFactors?number=1000001");
+		HTTPHelpers.assertValidJSONResponse(response);
+		assertThat(response).hasBodyText("{\"number\":1000001,\"error\":\"too big number (>1e6)\"}");
+	}
 }

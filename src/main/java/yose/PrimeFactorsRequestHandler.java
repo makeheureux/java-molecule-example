@@ -19,9 +19,13 @@ public class PrimeFactorsRequestHandler {
 		String parameter = request.parameter("number");
 		try {
 			int n = Integer.parseInt(parameter);
-			response.contentType(JSON).body(gson.toJson(new PrimeJson(n, PrimeFactors.decompose(n))));
+			try {
+				response.contentType(JSON).body(gson.toJson(new PrimeJson(n, PrimeFactors.decompose(n))));
+			} catch (PrimeFactorException e) {
+				response.contentType(JSON).body(gson.toJson(new PrimeNumberErrorJson(n, e.getMessage())));
+			}
 		} catch (NumberFormatException e) {
-			response.contentType(JSON).body(gson.toJson(new ErrorJson(parameter, "not a number")));
+			response.contentType(JSON).body(gson.toJson(new NotANumberErrorJson(parameter, "not a number")));
 		}
 	}
 
@@ -35,11 +39,21 @@ public class PrimeFactorsRequestHandler {
 		}
 	}
 
-	public static class ErrorJson {
+	public static class NotANumberErrorJson {
 		public final String number;
 		public final String error;
 
-		ErrorJson(String number, String error) {
+		NotANumberErrorJson(String number, String error) {
+			this.number = number;
+			this.error = error;
+		}
+	}
+
+	public static class PrimeNumberErrorJson {
+		public final int number;
+		public final String error;
+
+		PrimeNumberErrorJson(int number, String error) {
 			this.number = number;
 			this.error = error;
 		}

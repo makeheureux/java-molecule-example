@@ -14,8 +14,14 @@ public class PrimeFactors {
 			709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829, 839, 853,
 			857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997 };
 
-	public static List<Integer> decompose(int n) {
+	private static final int MAX_NUMBER = 1_000_000;
+
+	public static List<Integer> decompose(int n) throws PrimeFactorException {
 		List<Integer> result = new LinkedList<>();
+
+		if (n > MAX_NUMBER) {
+			throw new PrimeFactorException("too big number (>1e6)");
+		}
 
 		for (int primeNumber : PRIME_NUMBERS) {
 			while (n % primeNumber == 0) {
