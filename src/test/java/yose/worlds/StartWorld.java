@@ -8,7 +8,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.regex.Pattern;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,8 +22,6 @@ import yose.HTMLDocument;
 import yose.YoseDriver;
 
 public class StartWorld {
-
-	private static final Pattern HTML_CONTENT_TYPE_PATTERN = Pattern.compile();
 
 	YoseDriver yose = new YoseDriver(9999);
 
