@@ -4,6 +4,7 @@ import static com.vtence.molecule.testing.http.HttpResponseAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
@@ -17,6 +18,7 @@ import com.vtence.molecule.testing.http.HttpRequest;
 import com.vtence.molecule.testing.http.HttpResponse;
 
 import yose.HTMLDocument;
+import yose.HTTPHelpers;
 import yose.YoseDriver;
 
 public class StartWorld {
@@ -44,27 +46,49 @@ public class StartWorld {
 	@Test
 	public void firstWebServiceChallenge() throws IOException {
 		response = request.get("/ping");
-
-		assertThat(response).isOK().hasContentType("application/json").hasBodyText("{\"alive\":true}");
+		HTTPHelpers.assertValidJSONResponse(response);
+		assertThat(response).hasBodyText("{\"alive\":true}");
 	}
 
 	@Test
 	public void testDecompostionOfPowerOfTwo() throws IOException {
 		response = request.get("/primeFactors?number=16");
-
-		assertThat(response).isOK().hasContentType("application/json")
-				.hasBodyText("{\"number\":16,\"decomposition\":[2,2,2,2]}");
+		HTTPHelpers.assertValidJSONResponse(response);
+		assertThat(response).hasBodyText("{\"number\":16,\"decomposition\":[2,2,2,2]}");
 	}
 
 	@Test
-	public void shareChallengeLink() throws Exception {
+	public void shareChallengeCheckLinkFound() throws Exception {
 		response = request.get("/");
 		assertThat(response).isOK();
-		Document doc = HTMLDocument.from(response.bodyText());
+		Document doc = HTMLDocument.from(response);
 		Element link = doc.getElementById("repository-link");
 		assertNotNull(link);
 		assertEquals("A", link.getTagName());
-		String target = link.getAttribute("href");
-		assertNotEquals(target, "");
+		String href = link.getAttribute("href");
+		assertNotEquals(href, "");
+	}
+
+	@Test
+	public void shareChallengeCheckLinkValid() throws Exception {
+		response = request.get("/");
+		Document doc = HTMLDocument.from(response);
+		Element link = doc.getElementById("repository-link");
+		String href = link.getAttribute("href");
+		HttpResponse linkResponse = HTTPHelpers.getFromURL(href);
+		HTTPHelpers.assertValidHTMLResponse(linkResponse);
+	}
+
+	@Test
+	public void shareChallengeCheckLinkTargetValid() throws Exception {
+		response = request.get("/");
+		Document doc = HTMLDocument.from(response);
+		Element link = doc.getElementById("repository-link");
+		String href = link.getAttribute("href");
+		HttpResponse linkResponse = HTTPHelpers.getFromURL(href);
+		Document linkDoc = HTMLDocument.from(linkResponse);
+		Element readme = linkDoc.getElementById("readme");
+		assertNotNull(readme);
+		assertTrue(readme.getTextContent().contains("YoseTheGame"));
 	}
 }

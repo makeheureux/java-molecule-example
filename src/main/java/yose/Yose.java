@@ -21,7 +21,7 @@ public class Yose {
 		server.start(new DynamicRoutes() {
 			{
 				get("/").to((request, response) -> response.body(
-						"Hello Yose <a id='repository-link' href='//github.com/makeheureux/java-molecule-example'>source code</a>"));
+						"Hello Yose <a id='repository-link' href='https://github.com/makeheureux/java-molecule-example'>source code</a>"));
 				get("/ping").to(new Ping(gson)::pong);
 				get("/primeFactors").to(new PrimeFactorsRequestHandler(gson)::numbers);
 			}

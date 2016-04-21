@@ -9,6 +9,8 @@ import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.vtence.molecule.testing.http.HttpResponse;
+
 public final class HTMLDocument {
 
 	private HTMLDocument() {
@@ -18,6 +20,10 @@ public final class HTMLDocument {
 		DOMParser parser = new DOMParser();
 		parser.parse(new InputSource(new StringReader(dom)));
 		return parser.getDocument();
+	}
+
+	public static Document from(HttpResponse response) throws IOException, SAXException {
+		return HTMLDocument.from(response.bodyText());
 	}
 
 	public static Element toElement(String dom) throws IOException, SAXException {
