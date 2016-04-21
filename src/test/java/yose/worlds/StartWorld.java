@@ -51,13 +51,6 @@ public class StartWorld {
 	}
 
 	@Test
-	public void testDecompostionOfPowerOfTwo() throws IOException {
-		response = request.get("/primeFactors?number=16");
-		HTTPHelpers.assertValidJSONResponse(response);
-		assertThat(response).hasBodyText("{\"number\":16,\"decomposition\":[2,2,2,2]}");
-	}
-
-	@Test
 	public void shareChallengeCheckLinkFound() throws Exception {
 		response = request.get("/");
 		assertThat(response).isOK();
