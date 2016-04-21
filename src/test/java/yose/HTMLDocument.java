@@ -3,12 +3,11 @@ package yose;
 import java.io.IOException;
 import java.io.StringReader;
 
+import org.cyberneko.html.parsers.DOMParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 
 public final class HTMLDocument {
 
