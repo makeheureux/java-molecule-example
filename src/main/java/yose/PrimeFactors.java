@@ -1,5 +1,7 @@
 package yose;
 
+import java.util.Arrays;
+
 public class PrimeFactors {
 
 	public static int[] factorOfTwo(int n) {
@@ -7,10 +9,12 @@ public class PrimeFactors {
 		int i = 0;
 		while (x > 1) {
 			i++;
-			x = x/2;
+			x = x / 2;
 		}
-		
-		return new int[]{2,2,2,2};
+
+		int[] result = new int[i];
+		Arrays.fill(result, 2);
+		return result;
 	}
-	
+
 }
