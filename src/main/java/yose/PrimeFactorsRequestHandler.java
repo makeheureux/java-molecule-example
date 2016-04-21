@@ -2,6 +2,8 @@ package yose;
 
 import static com.vtence.molecule.http.MimeTypes.JSON;
 
+import java.util.List;
+
 import com.google.gson.Gson;
 import com.vtence.molecule.Request;
 import com.vtence.molecule.Response;
@@ -25,9 +27,9 @@ public class PrimeFactorsRequestHandler {
 
 	public static class PrimeJson {
 		public final int number;
-		public final int[] decomposition;
+		public final List<Integer> decomposition;
 
-		PrimeJson(int n, int[] a) {
+		PrimeJson(int n, List<Integer> a) {
 			number = n;
 			decomposition = a;
 		}
