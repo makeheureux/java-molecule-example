@@ -51,4 +51,46 @@ public class PrimeWorld {
 		HTTPHelpers.assertValidJSONResponse(response);
 		assertThat(response).hasBodyText("{\"number\":\"foo\",\"error\":\"not a number\"}");
 	}
+
+	@Test
+	public void testDecompositionOf1() throws Exception {
+		response = request.get("/primeFactors?number=1");
+		HTTPHelpers.assertValidJSONResponse(response);
+		assertThat(response).hasBodyText("{\"number\":1,\"decomposition\":[]}");
+	}
+
+	@Test
+	public void testDecompositionOf10() throws Exception {
+		response = request.get("/primeFactors?number=10");
+		HTTPHelpers.assertValidJSONResponse(response);
+		assertThat(response).hasBodyText("{\"number\":10,\"decomposition\":[2,5]}");
+	}
+
+	@Test
+	public void testDecompositionOf12() throws Exception {
+		response = request.get("/primeFactors?number=12");
+		HTTPHelpers.assertValidJSONResponse(response);
+		assertThat(response).hasBodyText("{\"number\":12,\"decomposition\":[2,2,3]}");
+	}
+
+	@Test
+	public void testDecompositionOf21() throws Exception {
+		response = request.get("/primeFactors?number=21");
+		HTTPHelpers.assertValidJSONResponse(response);
+		assertThat(response).hasBodyText("{\"number\":21,\"decomposition\":[3,7]}");
+	}
+
+	@Test
+	public void testDecompositionOf300() throws Exception {
+		response = request.get("/primeFactors?number=300");
+		HTTPHelpers.assertValidJSONResponse(response);
+		assertThat(response).hasBodyText("{\"number\":300,\"decomposition\":[2,2,3,5,5]}");
+	}
+
+	@Test
+	public void testDecompositionOf997() throws Exception {
+		response = request.get("/primeFactors?number=997");
+		HTTPHelpers.assertValidJSONResponse(response);
+		assertThat(response).hasBodyText("{\"number\":997,\"decomposition\":[997]}");
+	}
 }
