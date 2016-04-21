@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import com.vtence.molecule.testing.http.HttpRequest;
 import com.vtence.molecule.testing.http.HttpResponse;
@@ -57,18 +56,15 @@ public class StartWorld {
 				.hasBodyText("{\"number\":16,\"decomposition\":[2,2,2,2]}");
 	}
 
-	// @Test
+	@Test
 	public void shareChallengeLink() throws Exception {
 		response = request.get("/");
 		assertThat(response).isOK();
 		Document doc = HTMLDocument.from(response.bodyText());
-		NodeList a = doc.getElementsByTagName("a");// ("repository-link");
-		System.out.println(a.getLength());
 		Element link = doc.getElementById("repository-link");
-		System.out.println(link);
 		assertNotNull(link);
-		assertEquals(link.getTagName(), "a");
-		String target = link.getTextContent();
+		assertEquals("A", link.getTagName());
+		String target = link.getAttribute("href");
 		assertNotEquals(target, "");
 	}
 }
