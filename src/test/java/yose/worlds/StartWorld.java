@@ -50,7 +50,7 @@ public class StartWorld {
 	}
 
 	@Test
-	public void testPowerOfTwo() throws IOException {
+	public void testDecompostionOfPowerOfTwo() throws IOException {
 		response = request.get("/primeFactors?number=16");
 
 		assertThat(response).isOK().hasContentType("application/json")

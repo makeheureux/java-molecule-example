@@ -8,37 +8,25 @@ import static com.vtence.molecule.http.MimeTypes.JSON;
 
 import java.util.Arrays;
 
-public class Prime {
+public class PrimeFactorsRequestHandler {
     private final Gson gson;
 
-    public Prime(Gson gson) {
+    public PrimeFactorsRequestHandler(Gson gson) {
         this.gson = gson;
     }
 
     public void numbers(Request request, Response response) throws Exception {
     	int n = Integer.parseInt(request.parameter("number"));
-    	response.contentType(JSON).body(gson.toJson(new PrimeJson(n,getPower(n))));
+    	response.contentType(JSON).body(gson.toJson(new PrimeJson(n,PrimeFactors.factorOfTwo(n))));
     }
 
-    public int getPower(int n) {
-    	int x = n;
-    	int i = 0;
-    	while (x > 1) {
-    		i++;
-    		x = x/2;
-    	}
-		return i;
-    }
-    
+  
     public static class PrimeJson {
-        public int number;
+        public final int number;
         public final int[] decomposition; 
         
-        PrimeJson(int n,int i) {
+        PrimeJson(int n,int[] a) {
         	number = n;
-        	int[] a = new int[i];
-        	Arrays.fill(a, 2);
-        	
         	decomposition = a;
         }
     }

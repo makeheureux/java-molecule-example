@@ -24,7 +24,7 @@ public class Yose {
 																	// Yose</body></html>"));
 						"<html><body>Hello Yose <a id='repository-link' href='https://github.com/makeheureux/java-molecule-example'>source code</a></body></html>"));
 				get("/ping").to(new Ping(gson)::pong);
-				get("/primeFactors").to(new Prime(gson)::numbers);
+				get("/primeFactors").to(new PrimeFactorsRequestHandler(gson)::numbers);
 			}
 		});
 	}
