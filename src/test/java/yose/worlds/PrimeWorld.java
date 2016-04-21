@@ -32,9 +32,23 @@ public class PrimeWorld {
 	}
 
 	@Test
-	public void testDecompostionOfPowerOfTwo() throws IOException {
+	public void testDecompostionOfPowerOfTwoOf16() throws IOException {
 		response = request.get("/primeFactors?number=16");
 		HTTPHelpers.assertValidJSONResponse(response);
 		assertThat(response).hasBodyText("{\"number\":16,\"decomposition\":[2,2,2,2]}");
+	}
+
+	@Test
+	public void testDecompostionOfPowerOfTwoOf1024() throws IOException {
+		response = request.get("/primeFactors?number=1024");
+		HTTPHelpers.assertValidJSONResponse(response);
+		assertThat(response).hasBodyText("{\"number\":1024,\"decomposition\":[2,2,2,2,2,2,2,2,2,2]}");
+	}
+
+	@Test
+	public void testNotANumber() throws Exception {
+		response = request.get("/primeFactors?number=foo");
+		HTTPHelpers.assertValidJSONResponse(response);
+		assertThat(response).hasBodyText("{\"number\":\"foo\",\"error\":\"not a number\"}");
 	}
 }

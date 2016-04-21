@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class PrimeFactors {
 
-	public static int[] factorOfTwo(int n) {
+	public static int[] decompose(int n) {
 		int x = n;
 		int i = 0;
 		while (x > 1) {
